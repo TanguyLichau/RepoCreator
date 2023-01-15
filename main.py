@@ -4,30 +4,30 @@ import subprocess
 import requests
 import json
 
-githubToken ="" # You need to create a token in Github
+GITHUB_TOKEN ="" # You need to create a token in Github
 
-repo_name = sys.argv[1]
-repo_description = "New repository"
+REPO_NAME = sys.argv[1]
+REPO_DESCRIPTION = "New repository"
 
-if not os.path.exists(repo_name):
-    os.makedirs(repo_name)
+if not os.path.exists(REPO_NAME):
+    os.makedirs(REPO_NAME)
 
-os.chdir(repo_name)
+os.chdir(REPO_NAME)
 
 
 subprocess.run(["git", "init"])
 subprocess.run(["git", "add", "."])
 subprocess.run(["git", "commit", "--allow-empty",  "-m", "First Commit"])
 
-url = f"https://api.github.com/user/repos"
+url = "https://api.github.com/user/repos"
 data = json.dumps({
-    "name": repo_name,
-    "description": repo_description,
+    "name": REPO_NAME,
+    "description": REPO_DESCRIPTION,
     "auto_init": False
 })
 headers = {
     "Content-Type": "application/json",
-    "Authorization":"token " + githubToken
+    "Authorization":"token " + GITHUB_TOKEN
 }
 response = requests.post(url, data=data, headers=headers)
 
@@ -38,4 +38,3 @@ subprocess.run(["git", "branch", "-M", "main"])
 subprocess.run(["git", "push", "-u", "origin", "main"])
 
 print("Repo created on GitHub:", repo_url)
-
