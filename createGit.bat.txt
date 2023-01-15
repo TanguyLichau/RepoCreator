@@ -1,0 +1,2 @@
+@echo off
+python "Absolute path for the main.py file" %1
